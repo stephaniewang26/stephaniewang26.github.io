@@ -1,0 +1,171 @@
+<html>
+
+<head>
+  <title>Thermometer Lab</title>
+  
+  
+</head>
+
+<body>
+  <h1>Thermometer Lab</h1>
+  <div>
+    <svg version="1.1" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" height="50%" width="75%">
+      <style>
+        #glass {
+          fill: #ffffff;
+          stroke: #cccccc;
+          stroke-width: 3;
+        }
+        
+
+        #highlights{
+          stroke:#ffffff;
+          stroke-width: 3;
+          fill:none;
+          max-width:15px;
+        }
+
+
+      </style>
+
+
+      <g id="glass">
+        <rect x="45" y="20" width="30" height="160" rx="15" />
+        <ellipse cx="60" cy="180" rx="30" ry="30" />
+        <rect x="46.5" y="22" width="27" height="165" rx="15" stroke="none" />
+      </g>
+
+      <g id="genCol">
+        <rect id="col" x="52.5" y="30" width="15" height="150" rx="8" />
+        <ellipse cx="60" cy="180" rx="20" ry="20" />
+        <!-- <rect x="46.5" y="22" width="27" height="165" rx="15" stroke="none" /> -->
+      </g>
+
+      <g id = "genTicks">
+        <rect x="80" y="35" width = "12" height = "5" />
+        <text id="tick1" x="97" y="41" font-size="12">212°</text>
+        <!-- add 6 to Y -->
+        <rect x="80" y="47" width = "7" height = "5" />
+        <rect x="80" y="59" width = "12" height = "5" />
+        <text id="tick2" x="97" y="65" font-size="12">159°</text>
+        <rect x="80" y="71" width = "7" height = "5" />
+        <rect x="80" y="83" width = "12" height = "5" />
+        <text id="tick3" x="97" y="89" font-size="12">106°</text>
+        <rect x="80" y="95" width = "7" height = "5" />
+        <rect x="80" y="107" width = "12" height = "5" />
+        <text id="tick4" x="97" y="113" font-size="12">53°</text>
+        <rect x="80" y="119" width = "7" height = "5" />
+        <rect x="80" y="131" width = "12" height = "5" />
+        <text id="tick5" x="97" y="137" font-size="12">0°</text>
+        <rect x="80" y="143" width = "7" height = "5" />
+
+
+      </g>
+
+      <g id="highlights">
+        <path d=" M 63 193 A 13 13 0 0 1 51 170" />
+        <path d=" M 56 168 A 13 13 0 0 1 64 168" />
+      </g>
+
+    </svg>
+  </div>
+
+  <style>
+    .slidecontainer {
+    width: 10%; /* Width of the outside container */
+    }
+
+/* The slider itself */
+    .slider {
+      appearance: none;
+      width: 100%; /* Full-width */
+      height: 25px; /* Specified height */
+      background: #d3d3d3; /* Grey background */
+      border-radius: 25px;
+      outline: none; /* Remove outline */
+      opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+      transition: opacity .2s;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+      opacity: 1; /* Fully shown on mouse-over */
+    }
+  </style>
+
+  <div class="slidecontainer">
+    <input type="range" min="0" max="100" value="100" class="slider" id="myRange">
+    <p>Value: <span id="demo"></span></p>
+  </div>
+
+  <div class="selectScale">
+    <form>
+      <input type="radio" id="fahrenheit" name="scale" value="Fahrenheit">
+      <label for="fahrenheit">Fahrenheit</label><br>
+      <input type="radio" id="celsius" name="scale" value="Celsius">
+      <label for="celsius">Celsius</label><br>
+      <button type="button" onclick="changeScale()">
+        Submit
+    </button>
+    </form>
+  </div>
+
+  <script>
+    function changeScale(){
+      var tick1 = document.getElementById("tick1");
+      var tick2 = document.getElementById("tick2");
+      var tick3 = document.getElementById("tick3");
+      var tick4 = document.getElementById("tick4");
+      var tick5 = document.getElementById("tick5");
+
+      if (document.getElementById("fahrenheit").checked){
+        console.log("fahrenheit")
+        tick1.textContent = "212°"
+        tick2.textContent = "159°"
+        tick3.textContent = "106°"
+        tick4.textContent = "53°"
+        tick5.textContent = "0°"
+      }
+      else if (document.getElementById("celsius").checked){
+        console.log("celsius")
+        tick1.textContent = "100°"
+        tick2.textContent = "70°"
+        tick3.textContent = "41°"
+        tick4.textContent = "11°"
+        tick5.textContent = "-18°"
+      }
+    }
+  </script>
+
+  <script>
+    var slider = document.getElementById("myRange");
+    var output = document.getElementById("demo");
+    var col = document.getElementById("col");
+    var genCol = document.getElementById("genCol")
+    genCol.style.fill = "red" // set at beginning
+    output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function(changeTemp) {
+      output.innerHTML = this.value;
+      col.setAttribute("height",this.value*1.5);
+      console.log(this.value)
+      col.setAttribute("y",180-this.value*1.5)
+
+      //whole thing is 150
+      // at 100 you want 30 and at 0 you want 180 at 50 you want 105 
+
+      if (this.value>70){
+        genCol.style.fill = "red";
+      }
+      else if(this.value<=70 && this.value>40){
+        genCol.style.fill = "orange"
+      }
+      else{
+        genCol.style.fill = "blue"
+      }
+    }
+  </script>
+</body>
+
+</html>
